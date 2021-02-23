@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
-COPY my-app/ ./my-app/
+COPY . ./my-app/
 RUN cd my-app && npm install && npm run build
 
 FROM node:15 AS server-build
