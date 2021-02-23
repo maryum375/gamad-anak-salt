@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors())
 app.use( bodyParser.json() ); 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../my-app/build')));
 
 app.post('/check', function (req, res) {
   let result = { success: false }
