@@ -2,6 +2,7 @@ import InitialDwarf from './images/dwarf.png';
 import SleepyDwarf from './images/sleepy.png';
 import './App.css';
 import ProveForm from './components/proveForm'
+import EncryptedMessage from './components/encryptedMessage'
 import { Component, useState } from 'react'
 
 
@@ -14,15 +15,10 @@ class App extends Component {
       lordIsHere: false,
       message: "Are you my giant?",
       dwarfImage: InitialDwarf,
-      thanksLink: ""
+      thanksLink: "",
+      encrypted: {},
+      decrypted: false
     }
-  }
-
-  toggleShowForm = () => {
-    this.setState({
-      ...this.state,
-      showForm: !this.state.showForm
-    });
   }
 
   handleWrongLord = (message) => {
@@ -38,11 +34,36 @@ class App extends Component {
     this.setState({
       ...this.state,
       lordIsHere: true,
-      message: response.message,
+      encrypted: response.encrypted,
       dwarfImage: InitialDwarf,
+      message: "My giant!! I missed you!",
       thanksLink: response.thanksLink
     });
-    this.toggleShowForm()
+  }
+
+  handleSuccessDecrypt = (response) => {
+    this.setState({
+      ...this.state,
+      lordIsHere: true,
+      encrypted: response.encrypted,
+      dwarfImage: InitialDwarf,
+    });
+  }
+
+  handleDecryptFail = (message) => {
+    this.setState({
+      ...this.state,
+      message
+    });
+  }
+
+  handleDecryptSuccess = (message, thanksLink) => {
+    this.setState({
+      ...this.state,
+      message,
+      decrypted: true,
+      thanksLink: thanksLink
+    });
   }
 
   sayThanks = () => {
@@ -54,33 +75,30 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={this.state.dwarfImage} className="App-logo" alt="logo" />
-          {this.state.lordIsHere ?
+
+          <p>
+            {this.state.message}
+          </p>
+          {this.state.decrypted ?
             (<div>
-              <div>
-                {this.state.message}
-              </div>
               <button
                 className="App-link"
                 onClick={this.sayThanks}>Say Thanks!</button>
             </div>) :
-            (<div>
-              <p>
-                {this.state.message}
-              </p>
-              {
-                !this.state.showForm ?
-                  <button
-                    onClick={this.toggleShowForm}
-                    className="App-link">
-                    prove it!
-              </button>
-                  : <ProveForm
-                    onWrongLord={this.handleWrongLord}
-                    onSuccessLord={this.handleSuccessLord}></ProveForm>
-              }
-            </div>)
-          }
+            this.state.lordIsHere ?
+              (<div>
+                <EncryptedMessage encrypted={this.state.encrypted}
+                  onDecryptSuccess={this.handleDecryptSuccess}
+                  onDecryptFail={this.handleDecryptFail}></EncryptedMessage>
 
+              </div>) :
+              (<div>
+                {<ProveForm
+                  onWrongLord={this.handleWrongLord}
+                  onSuccessLord={this.handleSuccessLord}></ProveForm>
+                }
+              </div>)
+          }
         </header>
       </div>
     );

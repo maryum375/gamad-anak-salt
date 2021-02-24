@@ -1,28 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
+const index = require('./routes/index');
+const check = require('./routes/check');
+const decrypt = require('./routes/decrypt');
 const cors = require('cors');
 const app = express();
 app.use(cors())
 app.use( bodyParser.json() ); 
 app.use(express.static(path.join(__dirname, '../my-app/build')));
 
-app.post('/check', function (req, res) {
-  let result = { success: false }
-  if (!req.body || !req.body.lordName) {
-    result.message = "Please provide giant name!"
-  }
-  else if (req.body.lordName.toLowerCase() !== "shay" && req.body.lordName.toLowerCase() !== "shay malchi") {
-    result.message = "Wrong!! You are not my giant. Go away!"
-  }
-  else {
-    result.message = "My giant!! Have a nice Purim Shay!"
-    result.thanksLink = "https://saltsecurity.slack.com/archives/D013L9AA1P0"
-    result.success = true
-  }
-
-  return res.send(result);
-});
+app.use(check)
+app.use(decrypt)
+app.use(index)
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
