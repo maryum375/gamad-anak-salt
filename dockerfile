@@ -14,6 +14,7 @@ RUN cd api && npm install
 COPY server.js ./api/
 COPY ./routes/ ./api/routes/
 COPY ./modules/ ./api/modules/
+COPY conf.json ./api/conf.json
 
 
 EXPOSE 8080
