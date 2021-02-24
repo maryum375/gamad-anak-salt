@@ -12,11 +12,11 @@ app.post('/check', function (req, res) {
   if (!req.body || !req.body.lordName) {
     result.message = "Please provide giant name!"
   }
-  else if (req.body.lordName.toLowerCase() !== "shay") {
+  else if (req.body.lordName.toLowerCase() !== "shay" && req.body.lordName.toLowerCase() !== "shay malchi") {
     result.message = "Wrong!! You are not my giant. Go away!"
   }
   else {
-    result.message = "My giant!! Have a nice Purim!"
+    result.message = "My giant!! Have a nice Purim Shay!"
     result.thanksLink = "https://saltsecurity.slack.com/archives/D013L9AA1P0"
     result.success = true
   }
