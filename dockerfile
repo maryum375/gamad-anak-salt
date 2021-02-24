@@ -11,9 +11,9 @@ WORKDIR /root/
 COPY --from=ui-build /usr/src/app/my-app/build ./my-app/build
 COPY package*.json ./api/
 RUN cd api && npm install
-COPY ./routes/ ./routes/
-COPY ./modules/ ./modules/
 COPY server.js ./api/
+COPY ./routes/ ./api/routes/
+COPY ./modules/ ./api/modules/
 
 
 EXPOSE 8080
