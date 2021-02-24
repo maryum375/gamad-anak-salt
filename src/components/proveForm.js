@@ -32,8 +32,8 @@ class ProveForm extends React.Component {
             <div>
                 Please type your name:
             </div>
-            <div>
-                <input type="text" onChange={this.handleChange}></input>
+            <div className="input-container">
+                <input type="text" className="input-box" onChange={this.handleChange}></input>
             </div>
             <button className="App-link" onClick={this.submit}>Ohh mighty!</button>
         </div>

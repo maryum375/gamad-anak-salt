@@ -30,3 +30,22 @@
 .App-link:active {
     background: #282c34;
 }
+
+.input-container{
+    margin: 5px 0 10px 0;
+}
+
+.input-box {
+
+    border-width: 0 0 2px 0;
+    border-color: #90949a;
+    background-color: transparent;
+    border-radius: 5px;
+    color: white;
+    height: 30px;
+    font-size: 18px;
+}
+
+.input-box:focus{
+    outline: none;
+}
